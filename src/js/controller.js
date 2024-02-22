@@ -1,11 +1,7 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
-
-const recipeContainer = document.querySelector('.recipe');
-
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
+import resultsView from './views/resultsView.js';
+import searchView from './views/searchView.js';
 
 const controlRecipes = async () => {
   try {
@@ -19,46 +15,22 @@ const controlRecipes = async () => {
   }
 };
 
-const init = function () {
-  recipeView.addHandlerRender(controlRecipes);
-};
-init();
-
-// Search results
-let searchResult;
-const searchResultsList = document.querySelector('.results');
-
-const getSearchResult = async () => {
+const controlSearchResults = async () => {
   try {
-    const res = await fetch(
-      'https://forkify-api.herokuapp.com/api/v2/recipes?search=pizza'
-    );
-    const result = await res.json();
-    searchResult = result.data.recipes;
-    searchResultsList.innerHTML = `<ul class="results">
-      ${searchResult
-        .map(recipe => {
-          return `<li class="preview">
-          <a class="preview__link preview__link--active" href="#23456">
-            <figure class="preview__fig">
-              <img src=${recipe.image_url} alt="Test" />
-            </figure>
-            <div class="preview__data">
-              <h4 class="preview__title">${recipe.title}</h4>
-              <p class="preview__publisher">${recipe.publisher}</p>
-              <div class="preview__user-generated">
-                <svg>
-                  <use href="src/img/icons.svg#icon-user"></use>
-                </svg>
-              </div>
-            </div>
-          </a>
-        </li>`;
-        })
-        .join('')}
-    </ul>`;
-  } catch (error) {
-    console.error(error);
+    resultsView.renderSpinner();
+
+    const query = searchView.getQuery();
+    if (!query) return;
+
+    await model.loadSearchResults(query);
+    resultsView.render(model.state.search.results);
+  } catch (err) {
+    console.error(err);
   }
 };
-getSearchResult();
+
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
+};
+init();
