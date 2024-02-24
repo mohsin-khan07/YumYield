@@ -1,16 +1,16 @@
-import View from './view';
+import View from "./view";
 // import icons from '../../img/icons.svg';
 
 class BookmarksView extends View {
-  _parentElement = document.querySelector('.bookmarks__list');
-  _errorMessage = 'No bookmarks yet. Find a nice recipe and bookmark it :)';
+  _parentElement = document.querySelector(".bookmarks__list");
+  _errorMessage = "No bookmarks yet. Find a nice recipe and bookmark it :)";
 
   addHandlerRender(handler) {
-    window.addEventListener('load', handler);
+    window.addEventListener("load", handler);
   }
 
   _generateMarkup() {
-    return this._data.map(this._generateMarkupPreview).join('');
+    return this._data.map(this._generateMarkupPreview).join("");
   }
 
   _generateMarkupPreview(result) {

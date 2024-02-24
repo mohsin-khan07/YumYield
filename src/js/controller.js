@@ -1,9 +1,9 @@
-import * as model from './model.js';
-import paginationView from './views/paginationView.js';
-import recipeView from './views/recipeView.js';
-import resultsView from './views/resultsView.js';
-import searchView from './views/searchView.js';
-import bookmarksView from './views/bookmarksView.js';
+import * as model from "./model.js";
+import paginationView from "./views/paginationView.js";
+import recipeView from "./views/recipeView.js";
+import resultsView from "./views/resultsView.js";
+import searchView from "./views/searchView.js";
+import bookmarksView from "./views/bookmarksView.js";
 
 const controlRecipes = async () => {
   try {
@@ -33,12 +33,12 @@ const controlSearchResults = async () => {
   }
 };
 
-const controlPagination = goToPage => {
+const controlPagination = (goToPage) => {
   resultsView.render(model.getSearchResultsPage(goToPage));
   paginationView.render(model.state.search);
 };
 
-const controlServings = newServings => {
+const controlServings = (newServings) => {
   model.updateServings(newServings);
   recipeView.render(model.state.recipe);
 };

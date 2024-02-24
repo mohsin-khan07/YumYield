@@ -1,18 +1,18 @@
-import { API_URL, RES_PER_PAGE } from './config';
-import { getJSON } from './helpers';
+import { API_URL, RES_PER_PAGE } from "./config";
+import { getJSON } from "./helpers";
 
 export const state = {
   recipe: {},
   bookmarks: [],
   search: {
-    query: '',
+    query: "",
     results: [],
     page: 1,
     resultsPerPage: RES_PER_PAGE,
   },
 };
 
-export const loadRecipe = async id => {
+export const loadRecipe = async (id) => {
   try {
     const data = await getJSON(`${API_URL}${id}`);
 
@@ -28,7 +28,7 @@ export const loadRecipe = async id => {
       ingredients: recipe.ingredients,
     };
 
-    if (state.bookmarks.some(bookmark => bookmark.id === recipe.id))
+    if (state.bookmarks.some((bookmark) => bookmark.id === recipe.id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
   } catch (err) {
@@ -36,13 +36,13 @@ export const loadRecipe = async id => {
   }
 };
 
-export const loadSearchResults = async query => {
+export const loadSearchResults = async (query) => {
   try {
     state.search.query = query;
 
     const data = await getJSON(`${API_URL}?search=${query}`);
 
-    state.search.results = data.data.recipes.map(rec => {
+    state.search.results = data.data.recipes.map((rec) => {
       return {
         id: rec.id,
         title: rec.title,
@@ -65,8 +65,8 @@ export const getSearchResultsPage = (page = state.search.page) => {
   return state.search.results.slice(start, end);
 };
 
-export const updateServings = newServings => {
-  state.recipe.ingredients.forEach(ing => {
+export const updateServings = (newServings) => {
+  state.recipe.ingredients.forEach((ing) => {
     ing.quantity = ing.quantity * (newServings / state.recipe.servings);
   });
 
@@ -74,10 +74,10 @@ export const updateServings = newServings => {
 };
 
 const persistBookmarks = () => {
-  localStorage.setItem('bookmarks', JSON.stringify(state.bookmarks));
+  localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
 };
 
-export const addBookmark = recipe => {
+export const addBookmark = (recipe) => {
   state.bookmarks.push(recipe);
 
   if (recipe.id == state.recipe.id) state.recipe.bookmarked = true;
@@ -85,8 +85,8 @@ export const addBookmark = recipe => {
   persistBookmarks();
 };
 
-export const removeBookmark = id => {
-  const index = state.bookmarks.findIndex(el => el.id === id);
+export const removeBookmark = (id) => {
+  const index = state.bookmarks.findIndex((el) => el.id === id);
   state.bookmarks.splice(index, 1);
   if (id == state.recipe.id) state.recipe.bookmarked = false;
 
@@ -94,7 +94,7 @@ export const removeBookmark = id => {
 };
 
 const init = function () {
-  const storage = localStorage.getItem('bookmarks');
+  const storage = localStorage.getItem("bookmarks");
   if (storage) state.bookmarks = JSON.parse(storage);
 };
 init();

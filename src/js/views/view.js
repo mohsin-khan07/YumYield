@@ -1,4 +1,4 @@
-import icons from '../../img/icons.svg';
+import icons from "../../img/icons.svg";
 
 export default class View {
   _data;
@@ -10,11 +10,11 @@ export default class View {
     this._data = data;
     const markup = this._generateMarkup();
     this._clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+    this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
   _clear() {
-    this._parentElement.innerHTML = '';
+    this._parentElement.innerHTML = "";
   }
 
   renderSpinner() {
@@ -26,7 +26,7 @@ export default class View {
       </div>
   `;
     this._clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+    this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 
   renderError(message = this._errorMessage) {
@@ -41,6 +41,6 @@ export default class View {
         </div>
     `;
     this._clear();
-    this._parentElement.insertAdjacentHTML('afterbegin', markup);
+    this._parentElement.insertAdjacentHTML("afterbegin", markup);
   }
 }
