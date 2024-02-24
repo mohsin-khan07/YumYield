@@ -1,7 +1,7 @@
 {
   "name": "yum-yield",
   "version": "1.0.0",
-  "description": "",
+  "description": "Recipe Finder Web Application",
   "scripts": {
     "start": "parcel index.html",
     "build": "parcel build index.html"
